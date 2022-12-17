@@ -24,7 +24,7 @@ type WsSubscriberHandler func(event *WsTradeEvent)
 
 func WsSubscriber(symbol string, handler WsSubscriberHandler, errHandler ErrHandler) (doneC, stopC chan struct{}, err error) {
 	subscriberMessage := make(chan WsTradeEvent, 1)
-	subscriberMessage <- WsTradeEvent{Type: "TicksSubscribe", Body: &wsTradeBody{Symbol: symbol}}
+	subscriberMessage <- WsTradeEvent{Type: "TicksSubscribe", Body: &WsTradeBody{Symbol: symbol}}
 	cfg := newsWsConfig(getWsEndpoint(), subscriberMessage)
 	wsHandler := func(message []byte) {
 		event := new(WsTradeEvent)
