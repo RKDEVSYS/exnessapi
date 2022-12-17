@@ -1,4 +1,4 @@
-package types
+package exnessapi
 
 type WsTradeEvent struct {
 	Type    string       `json:"type,omitempty"`
