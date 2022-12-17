@@ -3,7 +3,7 @@ package exnessapi
 import (
 	"net/http"
 	"time"
-	
+
 	"github.com/gorilla/websocket"
 )
 
@@ -16,7 +16,7 @@ type ErrHandler func(err error)
 // WsConfig webservice configuration
 type WsConfig struct {
 	Endpoint string
-	Message  chan types.WsTradeEvent
+	Message  chan WsTradeEvent
 }
 
 func newsWsConfig(endpoint string, message chan WsTradeEvent) *WsConfig {
