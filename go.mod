@@ -1,4 +1,4 @@
-module github.com/RKDEVSYS/exnessapi
+module github.com/RKDEVSYS/exness-api
 
 go 1.19
 
