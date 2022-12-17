@@ -2,12 +2,12 @@ package types
 
 type WsTradeEvent struct {
 	Type    string       `json:"type,omitempty"`
-	Body    *wsTradeBody `json:"body,omitempty"`
+	Body    *WsTradeBody `json:"body,omitempty"`
 	Channel uint         `json:"channel,omitempty"`
 	Id      uint         `json:"id,omitempty"`
 }
 
-type wsTradeBody struct {
+type WsTradeBody struct {
 	Type      interface{} `json:"type,omitempty"`
 	Symbol    string      `json:"symbol,omitempty"`
 	Price     interface{} `json:"price,omitempty"`

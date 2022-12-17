@@ -3,7 +3,8 @@ package exnessapi
 import (
 	"net/http"
 	"time"
-	
+
+	"github.com/RKDEVSYS/exnessapi/types"
 	"github.com/gorilla/websocket"
 )
 
@@ -19,7 +20,7 @@ type WsConfig struct {
 	Message  chan types.WsTradeEvent
 }
 
-func newsWsConfig(endpoint string, message chan WsTradeEvent) *WsConfig {
+func newsWsConfig(endpoint string, message chan types.WsTradeEvent) *WsConfig {
 	return &WsConfig{
 		Endpoint: endpoint,
 		Message:  message,

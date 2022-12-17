@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/RKDEVSYS/exnessapi/types"
 )
 
 const (
@@ -20,11 +22,11 @@ func getWsEndpoint() string {
 	return fmt.Sprintf("%s/%s", baseWsMainUrl, wsAccountPath)
 }
 
-type WsSubscriberHandler func(event *WsTradeEvent)
+type WsSubscriberHandler func(event *types.WsTradeEvent)
 
 func WsSubscriber(symbol string, handler WsSubscriberHandler, errHandler ErrHandler) (doneC, stopC chan struct{}, err error) {
-	subscriberMessage := make(chan WsTradeEvent, 1)
-	subscriberMessage <- WsTradeEvent{Type: "TicksSubscribe", Body: &wsTradeBody{Symbol: symbol}}
+	subscriberMessage := make(chan types.WsTradeEvent, 1)
+	subscriberMessage <- types.WsTradeEvent{Type: "TicksSubscribe", Body: &types.wsTradeBody{Symbol: symbol}}
 	cfg := newsWsConfig(getWsEndpoint(), subscriberMessage)
 	wsHandler := func(message []byte) {
 		event := new(WsTradeEvent)
