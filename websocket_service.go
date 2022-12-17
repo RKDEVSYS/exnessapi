@@ -3,6 +3,7 @@ package exnessapi
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"time"
 )
 
@@ -22,10 +23,10 @@ func getWsEndpoint() string {
 
 type WsSubscriberHandler func(event *WsTradeEvent)
 
-func WsSubscriber(symbol string, handler WsSubscriberHandler, errHandler ErrHandler) (doneC, stopC chan struct{}, err error) {
+func WsSubscriber(symbol string, headers *http.Header, handler WsSubscriberHandler, errHandler ErrHandler) (doneC, stopC chan struct{}, err error) {
 	subscriberMessage := make(chan WsTradeEvent, 1)
 	subscriberMessage <- WsTradeEvent{Type: "TicksSubscribe", Body: &WsTradeBody{Symbol: symbol}}
-	cfg := newsWsConfig(getWsEndpoint(), subscriberMessage)
+	cfg := newsWsConfig(getWsEndpoint(), headers, subscriberMessage)
 	wsHandler := func(message []byte) {
 		event := new(WsTradeEvent)
 		err := json.Unmarshal(message, event)

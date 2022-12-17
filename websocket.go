@@ -16,13 +16,15 @@ type ErrHandler func(err error)
 // WsConfig webservice configuration
 type WsConfig struct {
 	Endpoint string
+	Headers  *http.Header
 	Message  chan WsTradeEvent
 }
 
-func newsWsConfig(endpoint string, message chan WsTradeEvent) *WsConfig {
+func newsWsConfig(endpoint string, headers *http.Header, message chan WsTradeEvent) *WsConfig {
 	return &WsConfig{
 		Endpoint: endpoint,
 		Message:  message,
+		Headers:  headers,
 	}
 }
 
@@ -32,7 +34,7 @@ var wsServe = func(cfg *WsConfig, handler WsHandler, errHandler ErrHandler) (don
 		HandshakeTimeout:  45 * time.Second,
 		EnableCompression: false,
 	}
-	c, _, err := Dialer.Dial(cfg.Endpoint, nil)
+	c, _, err := Dialer.Dial(cfg.Endpoint, *cfg.Headers)
 	if err != nil {
 		return nil, nil, err
 	}
